@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Reservation - RestroArt{% endblock %}
+
+{% block content %}
+<!-- RESERVATION -->
+<section id="reservation" class="mt-5 pt-4">
+   <div class="container">
+      <div class="text-center mb-5" data-aos="fade-up">
+         <span class="slbl">Book a Table</span>
+         <h2 class="stitle">Make a <span>Reservation</span></h2>
+         <div class="sline"></div>
+         <p class="sdesc mx-auto" style="max-width:480px;">Reserve your table for a memorable dining experience. We
+            recommend booking 24 hours in advance for weekend evenings.</p>
+      </div>
+      <div class="row g-4 align-items-start">
+         <div class="col-lg-4" data-aos="fade-right">
+            <div style="background:var(--dark);border-radius:18px;padding:36px;">
+               <h4 style="color:#fff;font-size:1.3rem;margin-bottom:8px;">Contact Info</h4>
+               <p style="color:rgba(255,255,255,.55);font-size:.85rem;margin-bottom:26px;">We're happy to help you plan
+                  the perfect dining experience.</p>
+               <div class="d-flex flex-column gap-3">
+                  <div class="d-flex align-items-center gap-3">
+                     <div
+                        style="width:46px;height:46px;border-radius:11px;background:rgba(232,40,26,.2);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1.1rem;flex-shrink:0;">
+                        <i class="fas fa-clock"></i></div>
+                     <div><strong
+                           style="display:block;color:#ccc;font-size:.78rem;text-transform:uppercase;letter-spacing:.8px;">Opening
+                           Hours</strong><span style="color:#fff;font-size:.87rem;">Wed - Sun, 9 AM - 11 PM</span></div>
+                  </div>
+                  <div class="d-flex align-items-center gap-3">
+                     <div
+                        style="width:46px;height:46px;border-radius:11px;background:rgba(232,40,26,.2);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1.1rem;flex-shrink:0;">
+                        <i class="fas fa-phone-alt"></i></div>
+                     <div><strong
+                           style="display:block;color:#ccc;font-size:.78rem;text-transform:uppercase;letter-spacing:.8px;">Call
+                           for Booking</strong><span style="color:#fff;font-size:.87rem;">+1 (800) 123-4567</span></div>
+                  </div>
+                  <div class="d-flex align-items-center gap-3">
+                     <div
+                        style="width:46px;height:46px;border-radius:11px;background:rgba(232,40,26,.2);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1.1rem;flex-shrink:0;">
+                        <i class="fas fa-users"></i></div>
+                     <div><strong
+                           style="display:block;color:#ccc;font-size:.78rem;text-transform:uppercase;letter-spacing:.8px;">Group
+                           Dining</strong><span style="color:#fff;font-size:.87rem;">Special menus for 10+ guests</span>
+                     </div>
+                  </div>
+                  <div class="d-flex align-items-center gap-3">
+                     <div
+                        style="width:46px;height:46px;border-radius:11px;background:rgba(232,40,26,.2);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1.1rem;flex-shrink:0;">
+                        <i class="fas fa-map-marker-alt"></i></div>
+                     <div><strong
+                           style="display:block;color:#ccc;font-size:.78rem;text-transform:uppercase;letter-spacing:.8px;">Location</strong><span
+                           style="color:#fff;font-size:.87rem;">42 Flavor Street, NY</span></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-8" data-aos="fade-left">
+            <div class="fcard">
+               <div class="row g-3">
+                  <div class="col-sm-6"><label class="flbl">Full Name *</label><input type="text" id="name" class="fctrl"
+                        placeholder="John Doe" /></div>
+                  <div class="col-sm-6"><label class="flbl">Phone Number *</label><input id="number" type="tel" class="fctrl"
+                        placeholder="+1 (800) 000-0000" /></div>
+                  <div class="col-sm-6"><label class="flbl">Email Address *</label><input id="email" type="email" class="fctrl"
+                        placeholder="you@email.com" /></div>
+                   <div class="col-sm-6">
+                      <label class="flbl">Number of Guests *</label>
+                      <select class="fctrl" id="guest" >
+                         <option value="1">1 Person</option>
+                         <option value="2">2 People</option>
+                         <option value="3-4">3 - 4 People</option>
+                         <option value="5-6">5 - 6 People</option>
+                         <option value="7-10">7 -10 People</option>
+                         <option value="10+">10+ People</option>
+                      </select>
+                   </div>
+                  <div class="col-sm-6"><label class="flbl">Date *</label><input id="date" type="date" class="fctrl" /></div>
+                  <div class="col-sm-6">
+                     <label class="flbl">Time *</label>
+                     <select class="fctrl" id="time" >
+                        <option>09:00 AM</option>
+                        <option>10:00 AM</option>
+                        <option>11:00 AM</option>
+                        <option>12:00 PM</option>
+                        <option>01:00 PM</option>
+                        <option>02:00 PM</option>
+                        <option>06:00 PM</option>
+                        <option>07:00 PM</option>
+                        <option>08:00 PM</option>
+                        <option>09:00 PM</option>
+                        <option>10:00 PM</option>
+                     </select>
+                  </div>
+                  <div class="col-12"><label class="flbl">Special Requests</label><textarea id="special_request" class="fctrl" rows="3"
+                        placeholder="Allergies, dietary needs, special occasions..."></textarea></div>
+                  <div class="col-12"><button type="button" class="btn-red w-100 justify-content-center" onclick="resBtn()" id="resBtn"><i
+                           class="fas fa-calendar-check"></i>Confirm Reservation</button></div>
+               </div>
+               <div class="sucmsg" id="resOk">
+                  <i class="fas fa-check-circle"></i>
+                  <p>Table reserved! We'll confirm via email shortly.</p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{% endblock %}

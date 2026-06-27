@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sign Up - RestroArt{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}" />{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+    <div class="auth-box">
+        <div class="auth-side" style="background:linear-gradient(135deg, var(--green), #1a4a35);">
+            <div class="auth-side-content">
+                <div class="auth-icon"><i class="fas fa-user-plus"></i></div>
+                <h2>Join RestroArt!</h2>
+                <p>Create your account to unlock exclusive member benefits and a faster checkout experience.</p>
+                <div class="auth-features">
+                    <div class="auth-feat"><i class="fas fa-gift"></i> Welcome discount on first order</div>
+                    <div class="auth-feat"><i class="fas fa-star"></i> Earn loyalty rewards</div>
+                    <div class="auth-feat"><i class="fas fa-truck"></i> Track deliveries in real-time</div>
+                </div>
+            </div>
+        </div>
+        <div class="auth-form-wrap">
+            <div class="auth-form">
+                <div class="auth-form-header">
+                    <h3>Create Account</h3>
+                    <p>Already have an account? <a href="{% url 'signin' %}">Sign In</a></p>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="alert alert-danger" role="alert" id="alert" style="display: none;">
+                    </div>
+                    <div class="row g-3">
+
+                        <div>
+                            <div class="auth-input-group">
+                                <label class="auth-label"><i class="fas fa-user"></i>Name</label>
+                                <input type="text" name="name" class="auth-input" id="name" placeholder="Doe"
+                                    required />
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="auth-input-group">
+                                <label class="auth-label"><i class="fas fa-user"></i>Username</label>
+                                <input type="text" name="username" class="auth-input" id="username" placeholder="Doe"
+                                    required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="auth-input-group">
+                        <label class="auth-label"><i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" name="email" class="auth-input" id="email" placeholder="you@email.com"
+                            required />
+                    </div>
+                    <div class="auth-input-group">
+                        <label class="auth-label"><i class="fas fa-phone"></i> Phone Number</label>
+                        <input type="tel" name="phone" class="auth-input" id="phone_number"
+                            placeholder="+977 000-0000" />
+                    </div>
+                    <div class="row g-3">
+                        <div>
+                            <div class="auth-input-group">
+                                <label class="auth-label"><i class="fas fa-lock"></i> Password</label>
+                                <input type="password" name="password1" class="auth-input" id="password"
+                                    placeholder="••••••••" required />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="auth-options">
+                        <label class="auth-remember">
+                            <input type="checkbox" required /> I agree to the <a href="#">Terms of Service</a> & <a
+                                href="#">Privacy Policy</a>
+                        </label>
+                    </div>
+                    <button type="button" onclick="signupBtn()" id="btn" class="auth-btn"><i
+                            class="fas fa-user-plus"></i> Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

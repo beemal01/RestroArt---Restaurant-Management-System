@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - RestroArt</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 30px 20px;
+        }
+        .greeting {
+            font-size: 18px;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        .order-details {
+            background-color: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .order-details h2 {
+            color: #667eea;
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .items-list {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+        }
+        .price-breakdown {
+            margin: 20px 0;
+        }
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .price-row:last-child {
+            border-bottom: none;
+        }
+        .price-label {
+            font-weight: 600;
+            color: #555555;
+        }
+        .price-value {
+            font-weight: bold;
+            color: #333333;
+        }
+        .total-row {
+            background-color: #667eea;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .total-row .price-label,
+        .total-row .price-value {
+            color: #ffffff;
+            font-size: 18px;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            margin: 5px 0;
+            color: #666666;
+            font-size: 14px;
+        }
+        .footer .brand {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .thank-you {
+            text-align: center;
+            font-size: 16px;
+            color: #667eea;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 Order Confirmed!</h1>
+            <p>Thank you for choosing RestroArt</p>
+        </div>
+
+        <div class="content">
+            <div class="greeting">
+                Dear {{ username }},
+            </div>
+
+            <p>We're excited to let you know that your order has been successfully confirmed! Our team is already preparing your delicious meal with the utmost care and attention.</p>
+
+            <div class="order-details">
+                <h2>📋 Order Details</h2>
+                <div class="items-list">
+                    {{ item_text }}
+                </div>
+            </div>
+
+            <div class="price-breakdown">
+                <div class="price-row">
+                    <span class="price-label">Subtotal:</span>
+                    <span class="price-value">Rs.{{ total }}</span>
+                </div>
+                <div class="price-row">
+                    <span class="price-label">Tax (13%):</span>
+                    <span class="price-value">Rs.{{ tax }}</span>
+                </div>
+                <div class="total-row price-row">
+                    <span class="price-label">Grand Total:</span>
+                    <span class="price-value">Rs.{{ total_price }}</span>
+                </div>
+            </div>
+
+            <div class="thank-you">
+                Thank you for ordering with us! 🙏
+            </div>
+
+            <p>If you have any questions or need assistance, please don't hesitate to contact us. We're here to ensure you have an exceptional dining experience.</p>
+        </div>
+
+        <div class="footer">
+            <div class="brand">RestroArt</div>
+            <p>Delivering excellence, one order at a time.</p>
+            <p>© 2025 RestroArt. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

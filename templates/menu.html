@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Menu - RestroArt{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}" />{% endblock %}
+
+{% block content %}
+
+<section id="menu">
+    <div class="container">
+        <div class="row g-4" id='food-container'>
+        </div>
+    </div>
+</section>
+
+<!-- MENU DETAIL POPUP -->
+<div id="menuPop">
+    <div class="mpbox">
+        <button class="mpclose" id="mpClose"><i class="fas fa-times"></i></button>
+        <div class="mpimg"><img id="mpImg" src="" alt=""/></div>
+        <div class="mpbody">
+            <div id="mpCat"></div>
+            <div id="mpTitle"></div>
+            <div id="mpStars"></div>
+            <div id="mpDesc"></div>
+            <div id="mpPrice"></div>
+            <div class="mpmeta" id="mpMeta"></div>
+            <div class="mpqty">
+                <button class="mpqbtn" id="mpMinus">-</button>
+                <span class="mpqnum" id="mpQnum">1</span>
+                <button class="mpqbtn" id="mpPlus">+</button>
+                <span style="font-size:.82rem;color:#aaa;margin-left:9px;">portion</span>
+            </div>
+            <div class="mptags" id="mpTags"></div>
+                <button class="mpaddcart" id="mpAddCart"><i class="fas fa-shopping-cart"></i>Add to Cart</button>
+        </div>
+    </div>
+</div>
+
+<div class="pagination-container" id="pagination">
+    <button class="page-btn" id="prevBtn" disabled>
+        <i class="fas fa-chevron-left"></i> Previous
+    </button>
+    <span class="page-info">Page <span id="currentPage">1</span></span>
+    <button class="page-btn" id="nextBtn">
+        Next <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    // Get search query and page from URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search') || '';
+    const page = parseInt(urlParams.get('page')) || 1;
+
+    loadFoods(null, searchQuery, page);
+</script>
+{% endblock %}
+
+

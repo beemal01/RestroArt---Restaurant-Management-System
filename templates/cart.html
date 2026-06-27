@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Cart - RestroArt{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/cart.css' %}"/>{% endblock %}
+
+{% block content %}
+<section id="cart-page">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="slbl">Your Order</span>
+            <h2 class="stitle">Shopping <span>Cart</span></h2>
+            <div class="sline"></div>
+        </div>
+
+        <div class="cart-layout" data-aos="fade-up">
+            <!-- Cart Items -->
+            <div class="cart-items">
+                <div class="cart-header">
+                    <span class="ch-product">Product</span>
+                    <span class="ch-price">Price</span>
+                    <span class="ch-qty">Quantity</span>
+                    <span class="ch-total">Total</span>
+                    <span class="ch-remove"></span>
+                </div>
+
+                <div id="cartadd" class="cart-items-container">
+
+                </div>
+
+                <div class="cart-actions">
+                    <a href="{% url 'menu' %}" class="btn-red" style="padding:10px 24px;font-size:.85rem;"><i class="fas fa-arrow-left"></i> Continue Shopping</a>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div id="cartsummary" class="cart-summary">
+                
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    loadCart();
+</script>
+{% endblock %}

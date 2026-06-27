@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Confirmation - RestroArt</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 30px 20px;
+        }
+        .greeting {
+            font-size: 18px;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        .reservation-details {
+            background-color: #f8f9fa;
+            border-left: 4px solid #f5576c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .reservation-details h2 {
+            color: #f5576c;
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+            align-items: center;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #555555;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-value {
+            font-weight: bold;
+            color: #333333;
+            font-size: 16px;
+        }
+        .icon {
+            font-size: 20px;
+        }
+        .message-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .message-box p {
+            margin: 0;
+            color: #856404;
+            font-size: 14px;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            margin: 5px 0;
+            color: #666666;
+            font-size: 14px;
+        }
+        .footer .brand {
+            font-size: 18px;
+            font-weight: bold;
+            color: #f5576c;
+            margin-bottom: 10px;
+        }
+        .looking-forward {
+            text-align: center;
+            font-size: 16px;
+            color: #f5576c;
+            font-weight: 600;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #ffffff;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍽️ Reservation Confirmed!</h1>
+            <p>We're delighted to have you with us</p>
+        </div>
+
+        <div class="content">
+            <div class="greeting">
+                Dear {{ name }},
+            </div>
+
+            <p>We are thrilled to confirm your reservation at RestroArt! Our team is eagerly preparing to provide you with an unforgettable dining experience.</p>
+
+            <div class="reservation-details">
+                <h2>📅 Reservation Details</h2>
+                <div class="info-row">
+                    <span class="info-label">
+                        <span class="icon">📆</span> Date
+                    </span>
+                    <span class="info-value">{{ date }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">
+                        <span class="icon">⏰</span> Time
+                    </span>
+                    <span class="info-value">{{ time }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">
+                        <span class="icon">👥</span> Number of Guests
+                    </span>
+                    <span class="info-value">{{ guest }} {{ guest|pluralize:"person,people" }}</span>
+                </div>
+            </div>
+
+            <div class="message-box">
+                <p><strong>📝 Important Information:</strong> Please arrive 10 minutes before your scheduled time. If you need to make any changes or have special requests, feel free to reach out to us.</p>
+            </div>
+
+            <div class="looking-forward">
+                We look forward to hosting you and ensuring you have a wonderful dining experience! ✨
+            </div>
+
+            <p style="text-align: center;">Should you have any questions or require assistance, our team is just a call or email away.</p>
+        </div>
+
+        <div class="footer">
+            <div class="brand">RestroArt</div>
+            <p>Where every meal becomes a memorable experience.</p>
+            <p>© 2025 RestroArt. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

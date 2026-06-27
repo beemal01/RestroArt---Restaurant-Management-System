@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sign In - RestroArt{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}" />{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+    <div class="auth-box">
+        <div class="auth-side">
+            <div class="auth-side-content">
+                <div class="auth-icon"><i class="fas fa-utensils"></i></div>
+                <h2>Welcome Back!</h2>
+                <p>Sign in to your RestroArt account to track orders, save favorites, and enjoy exclusive deals.</p>
+                <div class="auth-features">
+                    <div class="auth-feat"><i class="fas fa-check-circle"></i> Quick re-order</div>
+                    <div class="auth-feat"><i class="fas fa-check-circle"></i> Save delivery addresses</div>
+                    <div class="auth-feat"><i class="fas fa-check-circle"></i> Exclusive member offers</div>
+                </div>
+            </div>
+        </div>
+        <div class="auth-form-wrap">
+            <div class="auth-form">
+                <div class="auth-form-header">
+                    <h3>Sign In</h3>
+                    <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="alert alert-danger" role="alert" id="alert" style="display: none;">
+
+                    </div>
+                    <div>
+                        <div class="auth-input-group">
+                            <label class="auth-label"><i class="fas fa-user"></i>Username</label>
+                            <input type="text" name="username" class="auth-input" id="username" placeholder="Doe"
+                                required />
+                        </div>
+                    </div>
+                    <div class="auth-input-group">
+                        <label class="auth-label"><i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" name="email" class="auth-input" id="email" placeholder="you@email.com" required />
+                    </div>
+                    <div class="auth-input-group">
+                        <label class="auth-label"><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" name="password" class="auth-input" id="password" placeholder="••••••••" required />
+                        <a href="#" class="auth-forgot">Forgot password?</a>
+                    </div>
+                    <div class="auth-options">
+                        <label class="auth-remember">
+                            <input type="checkbox" checked /> Remember me
+                        </label>
+                    </div>
+                    <button type="button" id="btn" onclick="signinBtn()" class="auth-btn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+                </form>
+                <div class="auth-divider"><span>or continue with</span></div>
+
+                <p class="auth-terms">By signing in, you agree to our <a href="#">Terms of Service</a> & <a
+                        href="#">Privacy Policy</a>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
