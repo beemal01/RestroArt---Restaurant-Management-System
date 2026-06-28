@@ -114,13 +114,106 @@ RestroArt/
 ├── media/                   # Uploaded menu images
 ├── manage.py                # Django management script
 ├── requirements.txt         # Python dependencies
-├── .env                     # Environment variables (DB, email)
+├── Dockerfile               # Docker image for Django + Celery
+├── compose.yml              # Docker Compose (PostgreSQL, Redis, Django, Celery)
+├── .env                     # Environment variables (DB, email, Docker config)
 └── .gitignore
 ```
 
 ---
 
 ## Getting Started
+
+### Prerequisites
+
+- **Option A (Manual):** Python 3.13+, PostgreSQL, Redis
+- **Option B (Recommended):** [Docker Desktop](https://www.docker.com/products/docker-desktop/) (handles PostgreSQL, Redis, and the app in containers)
+- A Gmail account for sending emails (or any SMTP provider)
+
+---
+
+## Docker Setup (Quick Start) 🐳
+
+Run the entire application — Django, PostgreSQL, Redis, and Celery — with a single command.
+
+### 1. Clone and Enter the Project
+
+```bash
+git clone <repository-url>
+cd RestroArt
+```
+
+### 2. Configure Environment
+
+The included `.env` file already contains sensible defaults for Docker. Verify or adjust:
+
+```env
+DB_NAME=restro_db
+DB_USER=bimal
+DB_PASSWORD=bimal123
+EMAIL_HOST_USER=your_email@gmail.com
+EMAIL_HOST_PASSWORD=your_app_password
+```
+
+> **Note:** Inside Docker containers, services communicate via their service names (`db`, `redis`). The `.env` file already sets `DATABASE_URL` and `CELERY_BROKER_URL` accordingly.
+
+### 3. Build and Start All Services
+
+```bash
+docker compose up --build
+```
+
+This starts four containers:
+
+| Container        | Service        | Purpose                                |
+|------------------|----------------|----------------------------------------|
+| `restroApp`      | Django Web     | Serves the app at `http://localhost:8000` |
+| `celery_worker`  | Celery Worker  | Processes background email tasks       |
+| `db`             | PostgreSQL 17  | Database server on port `5432`         |
+| `redis`          | Redis 7        | Cache & message broker on port `6379`  |
+
+### 4. Run Migrations
+
+In a **new terminal**, run:
+
+```bash
+docker compose exec django_web python manage.py migrate
+```
+
+### 5. Create a Superuser
+
+```bash
+docker compose exec django_web python manage.py createsuperuser
+```
+
+### 6. Access the Application
+
+Open [http://localhost:8000](http://localhost:8000) in your browser.
+
+---
+
+### Useful Docker Commands
+
+```bash
+# View logs
+docker compose logs -f
+
+# Stop all containers
+docker compose down
+
+# Stop and remove volumes (reset database)
+docker compose down -v
+
+# Run management commands
+docker compose exec django_web python manage.py <command>
+
+# Rebuild after dependency changes
+docker compose up --build
+```
+
+---
+
+## Manual Setup (Without Docker)
 
 ### Prerequisites
 
@@ -195,12 +288,21 @@ python manage.py createsuperuser
 
 ### 8. Start Redis
 
-Make sure Redis is running. On Windows you can use Docker or WSL:
+Make sure Redis is running on `localhost:6379`. On Windows you can use WSL:
 
 ```bash
-# Using Docker
-docker run -d -p 6379:6379 redis
+# WSL
+sudo apt install redis-server
+sudo service redis-server start
 ```
+
+On macOS/Linux:
+
+```bash
+redis-server
+```
+
+> **Tip:** If you prefer Docker, skip the manual steps above and use the **[Docker Setup](#docker-setup-quick-start-)**, which runs everything automatically.
 
 ### 9. Start Celery Worker
 
