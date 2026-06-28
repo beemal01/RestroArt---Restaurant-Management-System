@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+     POSTGRES_DB: restro_db
+     POSTGRES_USER: bimal
+     POSTGRES_PASSWORD: bimal123
+    ports:
+      - "5432:5432" 
+    volumes:
+     - postgres_data:/var/lib/postgresql/data
+    env_file:
+     - .env
+  
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    
+    
+  django_web:
+    build: .
+    container_name: restroApp
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - .:/restroApp
+    env_file:
+     - .env
+  
+  celery_worker:
+    build: .
+    container_name: celery_worker
+    command: celery -A restroApp worker --pool=solo -l info
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/restroApp
+    env_file:
+     - .env
+
+volumes:
+  postgres_data:
