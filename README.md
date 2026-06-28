@@ -148,14 +148,27 @@ cd RestroArt
 The included `.env` file already contains sensible defaults for Docker. Verify or adjust:
 
 ```env
+# Database Configuration
 DB_NAME=restro_db
-DB_USER=bimal
-DB_PASSWORD=bimal123
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+
+# Docker-specific Database Variables (used by compose.yml)
+POSTGRES_DB=restro_db
+POSTGRES_USER=your_db_user
+POSTGRES_PASSWORD=your_db_password
+
+# Docker Connection Strings (uses service names)
+DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+CELERY_BROKER_URL=redis://redis:6379/0
+CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+# Email Configuration (Gmail example)
 EMAIL_HOST_USER=your_email@gmail.com
 EMAIL_HOST_PASSWORD=your_app_password
 ```
 
-> **Note:** Inside Docker containers, services communicate via their service names (`db`, `redis`). The `.env` file already sets `DATABASE_URL` and `CELERY_BROKER_URL` accordingly.
+> **Note:** Inside Docker containers, services communicate via their service names (`db`, `redis`). The `DATABASE_URL` and `CELERY_BROKER_URL` already reference these automatically.
 
 ### 3. Build and Start All Services
 
@@ -165,12 +178,12 @@ docker compose up --build
 
 This starts four containers:
 
-| Container        | Service        | Purpose                                |
-|------------------|----------------|----------------------------------------|
-| `restroApp`      | Django Web     | Serves the app at `http://localhost:8000` |
-| `celery_worker`  | Celery Worker  | Processes background email tasks       |
-| `db`             | PostgreSQL 17  | Database server on port `5432`         |
-| `redis`          | Redis 7        | Cache & message broker on port `6379`  |
+| Container       | Service        | Purpose                               |
+|-----------------|----------------|-------------------------------------  |
+| `restroApp`     | Django Web     | Serves the app at `localhost:8000`    |
+| `celery_worker` | Celery Worker  | Processes background email tasks      |
+| `db`            | PostgreSQL 17  | Database server on port `5432`        |
+| `redis`         | Redis 7        | Cache & message broker on port `6379` |
 
 ### 4. Run Migrations
 
@@ -215,13 +228,6 @@ docker compose up --build
 
 ## Manual Setup (Without Docker)
 
-### Prerequisites
-
-- Python 3.13+
-- PostgreSQL (running on `localhost:5432`)
-- Redis (running on `localhost:6379`)
-- A Gmail account for sending emails (or any SMTP provider)
-
 ### 1. Clone and Setup
 
 ```bash
@@ -250,8 +256,8 @@ Create a `.env` file in the project root (a template is already included):
 ```env
 # Database Configuration
 DB_NAME=restro_db
-DB_USER=bimal
-DB_PASSWORD=bimal123
+DB_USER=db_username
+DB_PASSWORD=db-passowrd
 
 # Email Configuration (Gmail example)
 EMAIL_HOST_USER=your_email@gmail.com
@@ -266,11 +272,11 @@ Open PostgreSQL and create the database:
 
 ```sql
 CREATE DATABASE restro_db;
-CREATE USER bimal WITH PASSWORD 'bimal123';
-ALTER ROLE bimal SET client_encoding TO 'utf8';
-ALTER ROLE bimal SET default_transaction_isolation TO 'read committed';
-ALTER ROLE bimal SET timezone TO 'UTC';
-GRANT ALL PRIVILEGES ON DATABASE restro_db TO bimal;
+CREATE USER your_db_user WITH PASSWORD 'your_db_password';
+ALTER ROLE your_db_user SET client_encoding TO 'utf8';
+ALTER ROLE your_db_user SET default_transaction_isolation TO 'read committed';
+ALTER ROLE your_db_user SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE restro_db TO your_db_user;
 ```
 
 ### 6. Run Migrations
