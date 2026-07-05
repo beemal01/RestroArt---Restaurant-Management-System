@@ -246,69 +246,20 @@
 }
 
 .auth-divider {
-    text-align: center;
-    margin: 22px 0;
-    position: relative;
-}
-
-.auth-divider::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: #eee;
-}
-
-.auth-divider span {
-    background: #fff;
-    padding: 0 14px;
-    position: relative;
-    z-index: 1;
-    color: #999;
-    font-size: 0.8rem;
-}
-
-.auth-social {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 18px;
-}
-
-.auth-social-btn {
-    flex: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 11px;
-    border-radius: 10px;
-    font-size: 0.84rem;
-    font-weight: 600;
-    border: 2px solid #eee;
-    color: #555;
-    transition: 0.3s;
+    gap: 16px;
+    margin: 24px 0 20px;
+    color: #bbb;
+    font-size: 0.82rem;
 }
 
-.auth-social-btn:hover {
-    transform: translateY(-2px);
-    border-color: #ddd;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
-
-.auth-social-btn.google:hover {
-    border-color: #ea4335;
-    color: #ea4335;
-}
-
-.auth-social-btn.facebook:hover {
-    border-color: #1877f2;
-    color: #1877f2;
-}
-
-.auth-social-btn i {
-    font-size: 1.05rem;
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
 }
 
 .auth-terms {
@@ -362,7 +313,4 @@
         padding: 24px 18px;
     }
 
-    .auth-social {
-        flex-direction: column;
-    }
 }

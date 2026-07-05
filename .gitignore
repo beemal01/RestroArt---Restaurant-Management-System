@@ -8,3 +8,11 @@ __pycache__/
 env/
 .env.local
 .env.*.local
+*.db
+*.egg-info/
+.idea/
+.vscode/
+*.log
+.DS_Store
+data_dump.json
+myenv/

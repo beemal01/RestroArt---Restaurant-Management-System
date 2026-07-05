@@ -37,9 +37,8 @@ class foodlist(generics.ListAPIView):
     search_fields = ['title', 'show_title', 'food_category', 'chef_tags']
     pagination_class = Mypagination
 
-    @method_decorator(cache_page(60 * 60 * 2, key_prefix = 'foodlist'))
     def list(self, request, *args, **kwargs):
-        return super().list(request, args, kwargs)
+        return super().list(request, *args, **kwargs)
 
 
 class foodview(generics.CreateAPIView):

@@ -6,7 +6,9 @@ from dotenv import load_dotenv
 
 
 def main():
-    load_dotenv()
+    # Only load .env if DB_HOST is not already set (e.g. inside Docker compose)
+    if not os.environ.get('DB_HOST'):
+        load_dotenv()
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Restro.settings')
     try:

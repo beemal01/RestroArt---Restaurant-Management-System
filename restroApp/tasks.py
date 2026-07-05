@@ -50,7 +50,6 @@ RestroArt Team'''
         msg.send()
         
         logger.info(f"Email sent successfully to {email}")
-        logger.info(f"Message ID: {msg.message_id}")
         return f"Email sent to {email}"
     except Exception as e:
         logger.error(f"Error sending email to {email}: {str(e)}")
@@ -94,7 +93,6 @@ RestroArt Team'''
         msg.send()
         
         logger.info(f"Email sent successfully to {email}")
-        logger.info(f"Message ID: {msg.message_id}")
         return f"Email sent to {email}"
     except Exception as e:
         logger.error(f"Error sending email to {email}: {str(e)}")

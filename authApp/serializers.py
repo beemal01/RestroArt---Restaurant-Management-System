@@ -50,6 +50,7 @@ class LogoutSerializer(serializers.Serializer):
         try:
             RefreshToken(self.token).blacklist()
         except TokenError:
-            self.fail("Bad Request!!!")
+            pass
 
 
+    

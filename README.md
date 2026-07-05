@@ -166,7 +166,7 @@ CELERY_RESULT_BACKEND=redis://redis:6379/0
 # Email Configuration (Gmail example)
 EMAIL_HOST_USER=your_email@gmail.com
 EMAIL_HOST_PASSWORD=your_app_password
-```
+
 
 > **Note:** Inside Docker containers, services communicate via their service names (`db`, `redis`). The `DATABASE_URL` and `CELERY_BROKER_URL` already reference these automatically.
 
@@ -262,6 +262,7 @@ DB_PASSWORD=db-passowrd
 # Email Configuration (Gmail example)
 EMAIL_HOST_USER=your_email@gmail.com
 EMAIL_HOST_PASSWORD=your_app_password
+
 ```
 
 > **Note:** For Gmail, you will need an App Password (not your regular password).

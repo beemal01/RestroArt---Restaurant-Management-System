@@ -202,6 +202,7 @@ async function signinBtn() {
     button.textContent = 'Sign In';
 }
 
+
 document.addEventListener('DOMContentLoaded', () => {
     const access = localStorage.getItem('access');
     const u_name = localStorage.getItem('username')
@@ -227,45 +228,30 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('cartadd')) {
         loadCart();
     }
+
 });
 
 
 async function logoutUser() {
-    const access = getAccessToken();
     const refresh = localStorage.getItem('refresh');
 
-    if (!access || !refresh) {
-        console.error("No tokens found in localStorage");
-        return;
-    }
-
     try {
-        const response = await fetch('/api/logoutview/', {
+        await fetch('/api/logoutview/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + access,
             },
             body: JSON.stringify({ refresh })
         });
-
-        if (response.ok) {
-            localStorage.removeItem("access");
-            localStorage.removeItem("refresh");
-            localStorage.removeItem("username");
-            window.location.href = '/';
-        } else {
-            const error = await response.json();
-            const alertBox = document.getElementById('alert');
-            if (alertBox) {
-                alertBox.style.display = 'block';
-                alertBox.textContent = extractError(error);
-            }
-            console.error("Logout failed:", error);
-        }
     } catch (err) {
-        console.error("Network error:", err);
+        console.error("Logout API error (ignored):", err);
     }
+
+    // Always clear tokens and redirect, regardless of API response
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    localStorage.removeItem("username");
+    window.location.href = '/';
 }
 
 
@@ -283,9 +269,9 @@ async function loadFoods(limit = null, searchQuery = '', page = 1) {
     const response = await fetch(url);
 
     if (response.status === 429) {
-        const msg = await response.json();   
-        showError(msg.detail || msg.message || "Too many requests. Please try again later.");                  
-        return;                              
+        const msg = await response.json();
+        showError(msg.detail || msg.message || "Too many requests. Please try again later.");
+        return;
     }
 
     const data = await response.json();
@@ -340,11 +326,11 @@ async function loadFoods(limit = null, searchQuery = '', page = 1) {
     const currentPageEl = document.getElementById('currentPage');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    
+
     if (currentPageEl) {
         currentPageEl.textContent = page;
     }
-    
+
     if (prevBtn) {
         prevBtn.disabled = !data.previous;
         prevBtn.onclick = () => {
@@ -354,7 +340,7 @@ async function loadFoods(limit = null, searchQuery = '', page = 1) {
             }
         };
     }
-    
+
     if (nextBtn) {
         nextBtn.disabled = !data.next;
         nextBtn.onclick = () => {
@@ -657,3 +643,7 @@ async function searchItem() {
         window.location.href = `/menu/?search=${search}`;
     }
 }
+
+
+
+

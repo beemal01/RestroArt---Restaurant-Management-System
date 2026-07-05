@@ -1,21 +1,39 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import User
 from .serializers import *
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-from django.views.decorators.vary import vary_on_headers
 
 
 # Create your views here.
 
+
+def redirect_to_canonical_origin(request):
+    host = request.get_host().split(':')[0]
+    if host != '127.0.0.1':
+        return None
+
+    canonical_url = f"{request.scheme}://localhost:8000{request.path}"
+    if request.META.get('QUERY_STRING'):
+        canonical_url = f"{canonical_url}?{request.META['QUERY_STRING']}"
+
+    return HttpResponseRedirect(canonical_url)
+
 def signup(request):
+    redirect_response = redirect_to_canonical_origin(request)
+    if redirect_response:
+        return redirect_response
+
     return render(request, 'signup.html')
 
 def signin(request):
+    redirect_response = redirect_to_canonical_origin(request)
+    if redirect_response:
+        return redirect_response
+
     return render(request, 'signin.html')
 
 def cart(request):
@@ -50,15 +68,16 @@ class signinview(generics.GenericAPIView):
             'access': str(refresh.access_token),
         }, status=status.HTTP_202_ACCEPTED)
     
-  
+   
 class logoutview(generics.GenericAPIView):
     serializer_class = LogoutSerializer
+    permission_classes = [AllowAny]
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        try:
-            serializer.save()
-            return Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
-        except TokenError:
-            return Response({"error": "Invalid or expired token"}, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
+        return Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
+
+
+
