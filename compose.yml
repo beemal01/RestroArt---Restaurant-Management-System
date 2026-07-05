@@ -8,8 +8,24 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - restro_network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - restro_network
 
   web:
     build: .
@@ -17,12 +33,42 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
     environment:
       - DB_HOST=db
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
     env_file:
       - .env
     restart: unless-stopped
+    networks:
+      - restro_network
+
+  celery_worker:
+    build: .
+    container_name: celery_worker
+    command: celery -A restroApp worker
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      - DB_HOST=db
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - restro_network
 
 volumes:
   postgres_data:
+
+networks:
+  restro_network:
+    driver: bridge
